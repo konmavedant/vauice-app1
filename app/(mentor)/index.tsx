@@ -177,15 +177,18 @@ export default function MentorHome() {
   };
 
   const panGesture = Gesture.Pan()
-    .minDistance(5)
-    .failOffsetX([-5, 5])
-    .failOffsetY([-5, 5])
-    .activeOffsetX([-20, 20])
-    .activeOffsetY([-20, 20])
+    .minDistance(10)
+    .activeOffsetX([-10, 10])
+    .activeOffsetY([-10, 10])
+    .onBegin(() => {
+      'worklet';
+      cardRotate.value = 0;
+    })
     .onUpdate((event) => {
+      'worklet';
       translateX.value = event.translationX;
       translateY.value = event.translationY;
-      cardRotate.value = event.translationX / WINDOW_WIDTH;
+      cardRotate.value = event.translationX / (WINDOW_WIDTH * 0.7);
 
       if (Math.abs(event.translationX) > Math.abs(event.translationY)) {
         if (event.translationX > SWIPE_THRESHOLD) {
@@ -202,25 +205,45 @@ export default function MentorHome() {
       }
     })
     .onEnd((event) => {
-      const swipedRight = event.translationX > SWIPE_THRESHOLD;
-      const swipedLeft = event.translationX < -SWIPE_THRESHOLD;
+      'worklet';
+      const velocity = event.velocityX;
+      const swipedRight = event.translationX > SWIPE_THRESHOLD || velocity > 800;
+      const swipedLeft = event.translationX < -SWIPE_THRESHOLD || velocity < -800;
       const swipedUp = event.translationY < -SWIPE_THRESHOLD;
 
       if (swipedRight) {
-        translateX.value = withSpring(WINDOW_WIDTH * 1.5, {}, () => {
+        translateX.value = withSpring(WINDOW_WIDTH * 1.5, {
+          velocity: velocity,
+          damping: 15,
+          stiffness: 100,
+        }, () => {
           runOnJS(nextCard)();
         });
       } else if (swipedLeft) {
-        translateX.value = withSpring(-WINDOW_WIDTH * 1.5, {}, () => {
+        translateX.value = withSpring(-WINDOW_WIDTH * 1.5, {
+          velocity: velocity,
+          damping: 15,
+          stiffness: 100,
+        }, () => {
           runOnJS(nextCard)();
         });
       } else if (swipedUp) {
-        translateY.value = withSpring(-WINDOW_HEIGHT, {}, () => {
+        translateY.value = withSpring(-WINDOW_HEIGHT, {
+          damping: 15,
+          stiffness: 100,
+        }, () => {
           runOnJS(nextCard)();
         });
       } else {
-        translateX.value = withSpring(0);
-        translateY.value = withSpring(0);
+        translateX.value = withSpring(0, {
+          velocity: velocity,
+          damping: 15,
+          stiffness: 400,
+        });
+        translateY.value = withSpring(0, {
+          damping: 15,
+          stiffness: 400,
+        });
         cardRotate.value = withTiming(0);
         runOnJS(setSwipeDirection)(null);
       }
