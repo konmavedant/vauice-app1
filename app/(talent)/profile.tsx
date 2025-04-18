@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Grid2x2 as Grid, Bookmark, Settings } from 'lucide-react-native';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -36,6 +37,7 @@ const PROFILE_POSTS = [
 ];
 
 export default function ProfileScreen() {
+  const router = useRouter();
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
@@ -74,7 +76,7 @@ export default function ProfileScreen() {
 
       <TouchableOpacity 
         style={styles.editButton}
-        onPress={() => router.push('/(talent)/edit-profile')}
+        onPress={() => router.push('/(talent)/(stack)/edit-profile')}
       >
         <Text style={styles.editButtonText}>Edit Profile</Text>
       </TouchableOpacity>

@@ -1,6 +1,6 @@
 
 import { View, StyleSheet } from 'react-native';
-import EditProfileForm from '../../../components/EditProfileForm';
+import EditProfileForm from '../../components/EditProfileForm';
 
 export default function MentorEditProfile() {
   const initialData = {

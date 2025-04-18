@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Settings, Award, Users, Clock } from 'lucide-react-native';
 
 const STATS = [
@@ -16,6 +17,7 @@ const EXPERTISE = [
 ];
 
 export default function ProfileScreen() {
+  const router = useRouter();
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
@@ -67,7 +69,7 @@ export default function ProfileScreen() {
 
       <TouchableOpacity 
         style={styles.editButton}
-        onPress={() => router.push('/(mentor)/edit-profile')}
+        onPress={() => router.push('/(mentor)/(stack)/edit-profile')}
       >
         <Text style={styles.editButtonText}>Edit Profile</Text>
       </TouchableOpacity>
