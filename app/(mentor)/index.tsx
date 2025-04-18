@@ -178,8 +178,10 @@ export default function MentorHome() {
 
   const panGesture = Gesture.Pan()
     .minDistance(5)
-    .activeOffsetX([-10, 10])
-    .activeOffsetY([-10, 10])
+    .failOffsetX([-5, 5])
+    .failOffsetY([-5, 5])
+    .activeOffsetX([-20, 20])
+    .activeOffsetY([-20, 20])
     .onUpdate((event) => {
       translateX.value = event.translationX;
       translateY.value = event.translationY;
