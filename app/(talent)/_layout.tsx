@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Chrome as Home, MessageSquare, PlusSquare, Heart, User } from 'lucide-react-native';
+import { Home, MessageSquare, PlusSquare, Heart, User } from 'lucide-react-native';
 
 export default function TalentLayout() {
   return (
