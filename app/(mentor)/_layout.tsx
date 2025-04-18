@@ -1,6 +1,6 @@
 
 import { Tabs } from 'expo-router';
-import { Chrome as Home, MessageSquare, Heart, User } from 'lucide-react-native';
+import { Home, MessageSquare, Heart, User } from 'lucide-react-native';
 
 export default function MentorLayout() {
   return (
