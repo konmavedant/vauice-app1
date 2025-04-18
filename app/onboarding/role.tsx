@@ -11,8 +11,7 @@ export default function RoleSelection() {
 
   const handleRoleSelect = (role: 'talent' | 'mentor') => {
     // For web, we'll just navigate without storing
-    await storage.setItem('userRole', role);
-    router.push('/onboarding/interests');
+    router.replace(`/(${role})`);
   };
 
   return (
