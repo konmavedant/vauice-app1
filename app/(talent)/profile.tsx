@@ -72,7 +72,10 @@ export default function ProfileScreen() {
         <Text style={styles.bioText}>Building beautiful web experiences ✨</Text>
       </View>
 
-      <TouchableOpacity style={styles.editButton}>
+      <TouchableOpacity 
+        style={styles.editButton}
+        onPress={() => router.push('/edit-profile')}
+      >
         <Text style={styles.editButtonText}>Edit Profile</Text>
       </TouchableOpacity>
 
