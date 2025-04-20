@@ -1,10 +1,10 @@
 
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 
 interface EditProfileFormProps {
-  initialData: {
+  initialData?: {
     name: string;
     title: string;
     bio: string;
@@ -13,9 +13,18 @@ interface EditProfileFormProps {
   isMentor?: boolean;
 }
 
-export default function EditProfileForm({ initialData, isMentor }: EditProfileFormProps) {
+const defaultData = {
+  name: '',
+  title: '',
+  bio: '',
+  company: '',
+};
+
+export default function EditProfileForm({ initialData = defaultData, isMentor }: EditProfileFormProps) {
   const router = useRouter();
+  const params = useLocalSearchParams();
   const [formData, setFormData] = useState(initialData);
+  const isUserMentor = isMentor ?? params.isMentor === 'true';
 
   const handleSave = () => {
     // TODO: Implement save functionality with your backend
@@ -50,7 +59,7 @@ export default function EditProfileForm({ initialData, isMentor }: EditProfileFo
           />
         </View>
 
-        {isMentor && (
+        {isUserMentor && (
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Company</Text>
             <TextInput
